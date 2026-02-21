@@ -2756,59 +2756,49 @@ font-family:Inter,sans-serif;
   </div>
 </div>
 
-<script>
-/* 🔥 แก้แค่บรรทัดนี้ถ้า ngrok เปลี่ยน */
-const API_URL = "https://e5d0-34-106-113-211.ngrok-free.app/ask";
+<style>
+  #ai-widget {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    width: 380px;
+    height: 520px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    z-index: 9999;
+    background: white;
+  }
 
-async function sendMessage() {
-    const input = document.getElementById("chatInput");
-    const message = input.value.trim();
-    if (!message) return;
+  #ai-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: #e11d48;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 15px;
+    z-index: 10;
+  }
 
-    addMessage("You", message);
-    input.value = "";
+  #ai-widget iframe {
+    margin-top: 50px;
+    width: 100%;
+    height: calc(100% - 50px);
+    border: none;
+  }
+</style>
 
-    try {
-        const response = await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                question: message
-            })
-        });
-
-        const data = await response.json();
-        addMessage("AI", data.answer || "No response from server.");
-
-    } catch (error) {
-        addMessage("AI", "Error connecting to server.");
-    }
-}
-
-function addMessage(sender, text) {
-    const chat = document.getElementById("chatMessages");
-    const div = document.createElement("div");
-    div.style.marginBottom = "8px";
-
-    if (sender === "You") {
-        div.innerHTML = `<div style="text-align:right;">
-            <span style="background:#E11D48;color:white;padding:6px 10px;border-radius:8px;display:inline-block;">
-            ${text}
-            </span>
-        </div>`;
-    } else {
-        div.innerHTML = `<div>
-            <span style="background:#e5e7eb;padding:6px 10px;border-radius:8px;display:inline-block;">
-            ${text}
-            </span>
-        </div>`;
-    }
-
-    chat.appendChild(div);
-    chat.scrollTop = chat.scrollHeight;
-}
-</script>
+<div id="ai-widget">
+  <div id="ai-header">
+    PHaveCPU AI Advisor
+  </div>
+  <iframe src="https://55b47ffc152eb5eb84.gradio.live"></iframe>
+</div>
 </body>
 </html>
